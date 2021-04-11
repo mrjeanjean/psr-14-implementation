@@ -12,3 +12,6 @@ jobs:
         with:
             php_version: 7.4
       - uses: php-actions/phpunit@v2
+        with:
+          bootstrap: vendor/autoload.php
+          configuration: phpunit.configuration.xml
