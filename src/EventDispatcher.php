@@ -4,6 +4,7 @@ namespace Moveo\EventDispatcher;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
+use Psr\EventDispatcher\StoppableEventInterface;
 
 class EventDispatcher implements EventDispatcherInterface
 {
@@ -22,6 +23,9 @@ class EventDispatcher implements EventDispatcherInterface
     public function dispatch(object $event):object
     {
         foreach ($this->listenerProvider->getListenersForEvent($event) as $callback){
+            if($event instanceof StoppableEventInterface && $event->isPropagationStopped()){
+                break;
+            }
             $callback($event);
         }
 
