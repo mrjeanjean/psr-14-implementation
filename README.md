@@ -1,4 +1,6 @@
 # Event dispatcher for PHP
+[![Tests](https://github.com/mrjeanjean/psr-14-implementation/actions/workflows/ci.yml/badge.svg)](https://github.com/mrjeanjean/psr-14-implementation/actions?query=workflow%3ACI)
+
 Simple psr-14 (event dispatcher) implementation. Unit tests and CI through Github Actions.
 
 
