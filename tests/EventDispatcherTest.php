@@ -15,68 +15,68 @@ class EventDispatcherTest extends TestCase
 
     public function testShouldRegisterOneListeners():void
     {
-        $event = new DummyEvent();
         $listenerProvider = new ListenerProvider();
 
-        $listenerProvider->listen($event, function(){
+        $listenerProvider->addListener(DummyEvent::class, function(){
             echo "test";
         });
+
+        $event = new DummyEvent();
         $this->assertCount(1, $listenerProvider->getListenersForEvent($event));
     }
 
     public function testShouldRegisterSeveralListeners():void
     {
-        $event = new DummyEvent();
+
         $listenerProvider = new ListenerProvider();
 
-        $listenerProvider->listen($event, function(){
+        $listenerProvider->addListener(DummyEvent::class, function(){
             echo "test";
         });
-        $listenerProvider->listen($event, function(){
+        $listenerProvider->addListener(DummyEvent::class, function(){
             echo "test 2";
         });
 
+        $event = new DummyEvent();
         $this->assertCount(2, $listenerProvider->getListenersForEvent($event));
     }
 
     public function testShouldDispatchEventAndCallCallable():void
     {
-        $event = new DummyEvent();
         $listenerProvider = new ListenerProvider();
         $eventDispatcher = new EventDispatcher($listenerProvider);
 
-        $listenerProvider->listen($event, function(){
+        $listenerProvider->addListener(DummyEvent::class, function(){
             echo "1";
         });
-        $listenerProvider->listen($event, function(){
+        $listenerProvider->addListener(DummyEvent::class, function(){
             echo "2";
         });
-        $listenerProvider->listen($event, function(){
+        $listenerProvider->addListener(DummyEvent::class, function(){
             echo "3";
         });
 
+        $event = new DummyEvent();
         $this->expectOutputString('123');
         $eventDispatcher->dispatch($event);
     }
 
     public function testShouldDispatchEventForRightEvent():void
     {
-        $event = new DummyEvent();
-        $event2 = new \stdClass();
-
         $listenerProvider = new ListenerProvider();
         $eventDispatcher = new EventDispatcher($listenerProvider);
 
-        $listenerProvider->listen($event, function(){
+        $listenerProvider->addListener(DummyEvent::class, function(){
             echo "1";
         });
-        $listenerProvider->listen($event, function(){
+        $listenerProvider->addListener(DummyEvent::class, function(){
             echo "2";
         });
-        $listenerProvider->listen($event2, function(){
+        $listenerProvider->addListener(\stdClass::class, function(){
             echo "3";
         });
 
+        $event = new DummyEvent();
         $this->expectOutputString('12');
         $eventDispatcher->dispatch($event);
     }

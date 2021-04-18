@@ -29,8 +29,8 @@ class ListenerProvider implements ListenerProviderInterface
         return $listeners;
     }
 
-    public function listen(object $event, callable $callback): void
+    public function addListener(string $eventClassName, callable $callback): void
     {
-        $this->listeners[get_class($event)][] = $callback;
+        $this->listeners[$eventClassName][] = $callback;
     }
 }
