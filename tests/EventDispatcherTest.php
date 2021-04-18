@@ -80,4 +80,27 @@ class EventDispatcherTest extends TestCase
         $this->expectOutputString('12');
         $eventDispatcher->dispatch($event);
     }
+
+    public function testEventShouldStopEventPropagation():void
+    {
+        $listenerProvider = new ListenerProvider();
+        $eventDispatcher = new EventDispatcher($listenerProvider);
+
+        $listenerProvider->addListener(StoppableEvent::class, function(StoppableEvent $event){
+            echo "1";
+        });
+
+        $listenerProvider->addListener(StoppableEvent::class, function(StoppableEvent $event){
+            echo "2";
+            $event->stopPropagation();
+        });
+
+        $listenerProvider->addListener(StoppableEvent::class, function(StoppableEvent $event){
+            echo "3";
+        });
+
+        $event = new StoppableEvent();
+        $this->expectOutputString('12');
+        $eventDispatcher->dispatch($event);
+    }
 }
