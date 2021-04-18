@@ -4,6 +4,9 @@ namespace Moveo\EventDispatcher;
 
 use Psr\EventDispatcher\ListenerProviderInterface;
 
+/**
+ * Listener Provider which stores all listeners
+ */
 class ListenerProvider implements ListenerProviderInterface
 {
     /**
@@ -29,6 +32,10 @@ class ListenerProvider implements ListenerProviderInterface
         return $listeners;
     }
 
+    /**
+     * @param string $eventClassName
+     * @param callable $callback
+     */
     public function addListener(string $eventClassName, callable $callback): void
     {
         $this->listeners[$eventClassName][] = $callback;

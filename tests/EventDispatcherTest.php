@@ -8,11 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class EventDispatcherTest extends TestCase
 {
-    public function testShouldPass(): void
-    {
-        $this->assertTrue(true);
-    }
-
     public function testShouldRegisterOneListeners():void
     {
         $listenerProvider = new ListenerProvider();
